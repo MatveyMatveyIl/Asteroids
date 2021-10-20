@@ -7,7 +7,7 @@ from asteroids_game.src.image_for_sprites_loader import load_sprite
 class PlayerShip(GameObject):
 
     def __init__(self, position, screen_size):
-        super().__init__(load_sprite('1'), position, Vector2(0, 0))
+        super().__init__(load_sprite('player_ship'), position, Vector2(0, 0))
         self.rotate_angle = 5
         self.direction = Vector2(0, -1)
         self.default_direction = Vector2(0, -1)
