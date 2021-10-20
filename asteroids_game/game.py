@@ -2,6 +2,7 @@ import pygame
 from pygame.math import Vector2
 from asteroids_game.src.image_for_sprites_loader import load_sprite
 from asteroids_game.src.load_levels import load_levels
+from asteroids_game.src.create_random_way import create_random_position
 from asteroids_game.player_ship import PlayerShip
 from asteroids_game.asteroid import Asteroid
 
@@ -14,7 +15,9 @@ class Game:
         self.fps = pygame.time.Clock()
         self.player_ship = PlayerShip(Vector2(600, 400), self.screen.get_size())
         self.levels = load_levels()
-        self.asteroids = []
+        self.asteroids = [Asteroid(create_random_position(
+            self.screen.get_width(), self.screen.get_height(), 0, self.player_ship.position
+        ), self.screen.get_size()) for _ in range(6)]
 
     def game_loop(self):
         while True:
@@ -29,14 +32,24 @@ class Game:
 
     def _process_input(self):
         for event in pygame.event.get():
-            if event.type == pygame.QUIT or event.type == pygame.K_BACKSPACE:
+            if event.type == pygame.QUIT or \
+                    (event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE):
                 quit()
-        if pygame.key.get_pressed()[pygame.K_RIGHT]:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                #reload
+                pass
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                #menu
+                pass
+        pressed_key = pygame.key.get_pressed()
+        if pressed_key[pygame.K_RIGHT]:
             self.player_ship.rotate_ship(hourly=True)
-        if pygame.key.get_pressed()[pygame.K_LEFT]:
+        if pressed_key[pygame.K_LEFT]:
             self.player_ship.rotate_ship(hourly=False)
-        if pygame.key.get_pressed()[pygame.K_UP]:
+        if pressed_key[pygame.K_UP]:
             self.player_ship.accelerate()
+        if pressed_key[pygame.K_SPACE]:
+            pass
 
     def _process_game_logic(self):
         for game_obj in self._get_all_moving_obg():

@@ -6,7 +6,7 @@ from pygame.math import Vector2
 def create_random_velocity(min_speed, max_speed):
     angle = random.randint(0, 360)
     speed = random.randint(min_speed, max_speed)
-    return Vector2(speed, 0).rotate_ip(angle)
+    return Vector2(speed, 0).rotate(angle)
 
 
 def create_random_position(width, height, dist_to_ship, ship_pos):
