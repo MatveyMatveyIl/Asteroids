@@ -16,4 +16,4 @@ class GameObject:
         return dist < self.radius + other_object.radius
 
     def draw(self, sprite):
-        sprite.blit(self.sprite, self.position - self.radius)
+        sprite.blit(self.sprite, self.position - Vector2(self.radius))
