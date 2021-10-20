@@ -1,5 +1,6 @@
 import pygame
 from asteroids_game.src.image_for_sprites_loader import load_sprite
+from asteroids_game.game_object import GameObject
 
 
 class Game:
@@ -7,6 +8,7 @@ class Game:
         self._init_pygame()
         self.screen = pygame.display.set_mode((1200, 800))
         self.background = load_sprite('space_bg')
+        self.fps = pygame.time.Clock()
 
     def game_loop(self):
         while True:
@@ -30,3 +32,4 @@ class Game:
     def _draw_game(self):
         self.screen.blit(self.background, (0, 0))
         pygame.display.flip()
+        self.fps.tick(60)
