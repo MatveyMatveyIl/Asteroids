@@ -2,7 +2,7 @@ from pygame.math import Vector2
 
 
 class GameObject:
-    def __init__(self, sprite, position: Vector2, velocity: Vector2, screen_size):
+    def __init__(self, sprite, position: Vector2, velocity: Vector2, screen_size=Vector2(0, 0)):
         self.sprite = sprite
         self.position = position
         self.velocity = velocity
