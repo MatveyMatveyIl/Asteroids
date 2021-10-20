@@ -1,10 +1,12 @@
 import pygame
+from asteroids_game.src.image_for_sprites_loader import load_sprite
 
 
 class Game:
     def __init__(self):
         self._init_pygame()
         self.screen = pygame.display.set_mode((1200, 800))
+        self.background = load_sprite('space_bg')
 
     def game_loop(self):
         while True:
@@ -26,5 +28,5 @@ class Game:
         pass
 
     def _draw_game(self):
-        self.screen.fill((0, 0, 0))
+        self.screen.blit(self.background, (0, 0))
         pygame.display.flip()
