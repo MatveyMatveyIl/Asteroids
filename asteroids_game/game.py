@@ -5,15 +5,17 @@ from asteroids_game.src.load_levels import load_levels
 from asteroids_game.src.create_random_way import create_random_position
 from asteroids_game.player_ship import PlayerShip
 from asteroids_game.asteroid import Asteroid
+from asteroids_game.bullet import Bullet
 
 
 class Game:
     def __init__(self):
         self._init_pygame()
         self.screen = pygame.display.set_mode((1200, 800))
+        self.screen_size = self.screen.get_size()
         self.background = load_sprite('space_bg')
         self.fps = pygame.time.Clock()
-        self.player_ship = PlayerShip(Vector2(600, 400), self.screen.get_size())
+        self.player_ship = PlayerShip(Vector2(600, 400), self.screen_size)
         self.levels = load_levels()
         self.asteroids = []
 
@@ -66,12 +68,7 @@ class Game:
         return [self.player_ship, *self.asteroids]
 
     def _create_asteroids(self):
-        size = {
-            0: 'big',
-            1: 'medium',
-            2: 'small'
-        }
         for i, count in enumerate(self.levels[self.current_level]):
             self.asteroids += [Asteroid(create_random_position(
                 self.screen.get_width(), self.screen.get_height(), 0, self.player_ship.position
-            ), self.screen.get_size(), size[i]) for _ in range(count)]
+            ), self.screen_size, 3 - i, self.asteroids.append) for _ in range(count)]
