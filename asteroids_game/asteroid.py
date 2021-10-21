@@ -1,4 +1,5 @@
 import random
+from pygame.math import Vector2
 from pygame.transform import rotozoom
 from asteroids_game.game_object import GameObject
 from asteroids_game.src.image_for_sprites_loader import load_sprite
@@ -23,4 +24,4 @@ class Asteroid(GameObject):
         if self.asteroid_size > 1:
             for _ in range(random.randint(2, 3)):
                 self.destruction_action(
-                    Asteroid(self.position, self.screen_size, self.asteroid_size - 1, self.destruction_action))
+                    Asteroid(self.position + Vector2(0, 0), self.screen_size, self.asteroid_size - 1, self.destruction_action))

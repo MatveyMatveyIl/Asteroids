@@ -20,7 +20,7 @@ class Game:
         self.asteroids = []
 
     def game_loop(self):
-        #self._create_asteroids()
+        self._create_asteroids()
         while True:
             self._process_input()
             self._process_game_logic()
@@ -45,6 +45,7 @@ class Game:
                 pass
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.player_ship.shoot()
+
         pressed_key = pygame.key.get_pressed()
         if pressed_key[pygame.K_RIGHT] or pressed_key[pygame.K_d]:
             self.player_ship.rotate_ship(hourly=True)
@@ -57,9 +58,16 @@ class Game:
         for game_obj in self._get_all_moving_obg():
             game_obj.move()
 
+        for bullet in self.bullets:
+            for astr in self.asteroids:
+                if astr.collision(bullet):
+                    self.asteroids.remove(astr)
+                    self.bullets.remove(bullet)
+                    astr.fault_asteroid()
+                    break
+
     def _draw_game(self):
         self.screen.blit(self.background, (0, 0))
-        a = self._get_all_moving_obg()
         for game_obg in self._get_all_moving_obg():
             game_obg.draw(self.screen)
         pygame.display.flip()
