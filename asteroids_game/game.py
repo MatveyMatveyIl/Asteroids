@@ -5,7 +5,6 @@ from asteroids_game.src.load_levels import load_levels
 from asteroids_game.src.create_random_way import create_random_position
 from asteroids_game.player_ship import PlayerShip
 from asteroids_game.asteroid import Asteroid
-from asteroids_game.bullet import Bullet
 
 
 class Game:
@@ -15,12 +14,13 @@ class Game:
         self.screen_size = self.screen.get_size()
         self.background = load_sprite('space_bg')
         self.fps = pygame.time.Clock()
-        self.player_ship = PlayerShip(Vector2(600, 400), self.screen_size)
+        self.bullets = []
+        self.player_ship = PlayerShip(Vector2(600, 400), self.screen_size, self.bullets.append)
         self.levels = load_levels()
         self.asteroids = []
 
     def game_loop(self):
-        self._create_asteroids()
+        #self._create_asteroids()
         while True:
             self._process_input()
             self._process_game_logic()
@@ -43,6 +43,12 @@ class Game:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 # menu
                 pass
+            elif (
+                    self.player_ship
+                    and event.type == pygame.KEYDOWN
+                    and event.key == pygame.K_SPACE
+            ):
+                self.player_ship.shoot()
         pressed_key = pygame.key.get_pressed()
         if pressed_key[pygame.K_RIGHT] or pressed_key[pygame.K_d]:
             self.player_ship.rotate_ship(hourly=True)
@@ -50,8 +56,8 @@ class Game:
             self.player_ship.rotate_ship(hourly=False)
         if pressed_key[pygame.K_UP] or pressed_key[pygame.K_w]:
             self.player_ship.accelerate()
-        if pressed_key[pygame.K_SPACE]:
-            pass
+        # if pressed_key[pygame.K_SPACE]:
+        #     self.player_ship.shoot()
 
     def _process_game_logic(self):
         for game_obj in self._get_all_moving_obg():
@@ -59,13 +65,14 @@ class Game:
 
     def _draw_game(self):
         self.screen.blit(self.background, (0, 0))
+        a = self._get_all_moving_obg()
         for game_obg in self._get_all_moving_obg():
             game_obg.draw(self.screen)
         pygame.display.flip()
         self.fps.tick(60)
 
     def _get_all_moving_obg(self):
-        return [self.player_ship, *self.asteroids]
+        return [self.player_ship, *self.asteroids, *self.bullets]
 
     def _create_asteroids(self):
         for i, count in enumerate(self.levels[self.current_level]):
