@@ -1,10 +1,9 @@
 from asteroids_game.game import Game
-from asteroids_game.menu import Menu
 
 
 def run_game():
-    game = Menu()
-    game.menu_loop()
+    game = Game('level_1')
+    game.game_loop()
 
 
 if __name__ == '__main__':

@@ -20,8 +20,11 @@ class Asteroid(GameObject):
         sprite = rotozoom(load_sprite('2'), random.randint(0, 90), scale)
         super().__init__(sprite, position, create_random_velocity(1, 3), screen_size)
 
-    def fault_asteroid(self):
+    def fault_asteroid(self, score):
         if self.asteroid_size > 1:
             for _ in range(random.randint(2, 3)):
                 self.destruction_action(
-                    Asteroid(self.position + Vector2(0, 0), self.screen_size, self.asteroid_size - 1, self.destruction_action))
+                    Asteroid(self.position + Vector2(0, 0), self.screen_size, self.asteroid_size - 1,
+                             self.destruction_action))
+        else:
+            score.update_score()
