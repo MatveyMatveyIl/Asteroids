@@ -1,6 +1,6 @@
 import pygame.locals
-from asteroids_game.game import *
-import sys
+from asteroids_game.game import Game
+from asteroids_game.src.image_for_sprites_loader import load_sprite
 
 
 def _init_pygame_menu():
@@ -23,16 +23,15 @@ class Menu:
         if x < pos[0] < x + w and y < pos[1] < y + h:
             if click[0] == 1:
                 if text == 'Start':
-                    game = Game()
+                    game = Game('level_1')
                     game.game_loop()
                 if text == 'Level':
                     level = Level()
                     level.level_loop()
                 if text == 'New Game':
-                    game = Game()
+                    game = Game('level_1')
                     game.game_loop()
                 if text == 'Exit':
-                    pygame.quit()
                     quit()
         pygame.draw.rect(self.screen, (255, 255, 255), (x, y, w, h))
         self.screen.blit(text_obj, (x, y))
@@ -46,15 +45,14 @@ class Menu:
             self.button(400, 500, 400, 50, 'Exit')
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+                    quit()
             pygame.display.update()
 
 
 class Level:
     def __init__(self):
         _init_pygame_menu()
-        self.screen = pygame.display.set_mode((800, 800))
+        self.screen = pygame.display.set_mode((1200, 800))
         self.screen_size = self.screen.get_size()
         self.background = load_sprite('space_bg')
         self.menu_front = pygame.font.Font('freesansbold.ttf', 39)
@@ -65,31 +63,19 @@ class Level:
         text_obj = self.menu_front.render(text, True, (255, 164, 189))
         if x < pos[0] < x + w and y < pos[1] < y + h:
             if click[0] == 1:
-                print(text)
-                if text == 'Level 1':
-                    game = Game()
-                    game.game_loop()
-                if text == 'Level 2':
-                    game = Game()
-                    game.game_loop()
-                if text == 'Level 3':
-                    game = Game()
-                    game.game_loop()
-                if text == 'Level 4':
-                    game = Game()
-                    game.game_loop()
+                game = Game(text)
+                game.game_loop()
         pygame.draw.rect(self.screen, (255, 255, 255), (x, y, w, h))
         self.screen.blit(text_obj, (x, y))
 
     def level_loop(self):
         while True:
             self.screen.blit(self.background, (0, 0))
-            self.button(200, 200, 400, 50, 'Level 1')
-            self.button(200, 300, 400, 50, 'Level 2')
-            self.button(200, 400, 400, 50, 'Level 3')
-            self.button(200, 500, 400, 50, 'Level 4')
+            self.button(200, 200, 400, 50, 'level_1')
+            self.button(200, 300, 400, 50, 'level_2')
+            self.button(200, 400, 400, 50, 'level_3')
+            self.button(200, 500, 400, 50, 'level_4')
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+                    quit()
             pygame.display.update()
