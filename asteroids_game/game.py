@@ -9,8 +9,9 @@ from asteroids_game.score import Score
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, level):
         self._init_pygame()
+        self.current_level = level
         self.screen = pygame.display.set_mode((1200, 800))
         self.screen_size = self.screen.get_size()
         self.background = load_sprite('space_bg')
@@ -33,7 +34,6 @@ class Game:
         pygame.init()
         pygame.mouse.set_visible(False)
         pygame.display.set_caption("Asteroids game")
-        self.current_level = 'level_1'
 
     def _process_input(self):
         for event in pygame.event.get():
@@ -41,8 +41,8 @@ class Game:
                     (event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE):
                 quit()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                # reload
-                pass
+                game = Game(self.current_level)
+                game.game_loop()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 # menu
                 pass

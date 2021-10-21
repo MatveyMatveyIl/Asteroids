@@ -2,7 +2,7 @@ from asteroids_game.game import Game
 
 
 def run_game():
-    game = Game()
+    game = Game('level_1')
     game.game_loop()
 
 
