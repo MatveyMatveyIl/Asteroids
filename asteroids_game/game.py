@@ -43,11 +43,7 @@ class Game:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 # menu
                 pass
-            elif (
-                    self.player_ship
-                    and event.type == pygame.KEYDOWN
-                    and event.key == pygame.K_SPACE
-            ):
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.player_ship.shoot()
         pressed_key = pygame.key.get_pressed()
         if pressed_key[pygame.K_RIGHT] or pressed_key[pygame.K_d]:
@@ -56,8 +52,6 @@ class Game:
             self.player_ship.rotate_ship(hourly=False)
         if pressed_key[pygame.K_UP] or pressed_key[pygame.K_w]:
             self.player_ship.accelerate()
-        # if pressed_key[pygame.K_SPACE]:
-        #     self.player_ship.shoot()
 
     def _process_game_logic(self):
         for game_obj in self._get_all_moving_obg():
