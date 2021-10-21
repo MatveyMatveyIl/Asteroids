@@ -15,11 +15,10 @@ class Game:
         self.fps = pygame.time.Clock()
         self.player_ship = PlayerShip(Vector2(600, 400), self.screen.get_size())
         self.levels = load_levels()
-        self.asteroids = [Asteroid(create_random_position(
-            self.screen.get_width(), self.screen.get_height(), 0, self.player_ship.position
-        ), self.screen.get_size()) for _ in range(6)]
+        self.asteroids = []
 
     def game_loop(self):
+        self._create_asteroids()
         while True:
             self._process_input()
             self._process_game_logic()
@@ -29,6 +28,7 @@ class Game:
         pygame.init()
         pygame.mouse.set_visible(False)
         pygame.display.set_caption("Asteroids game")
+        self.current_level = 'level_1'
 
     def _process_input(self):
         for event in pygame.event.get():
@@ -36,10 +36,10 @@ class Game:
                     (event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE):
                 quit()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                #reload
+                # reload
                 pass
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                #menu
+                # menu
                 pass
         pressed_key = pygame.key.get_pressed()
         if pressed_key[pygame.K_RIGHT]:
@@ -64,3 +64,14 @@ class Game:
 
     def _get_all_moving_obg(self):
         return [self.player_ship, *self.asteroids]
+
+    def _create_asteroids(self):
+        size = {
+            0: 'big',
+            1: 'medium',
+            2: 'small'
+        }
+        for i, count in enumerate(self.levels[self.current_level]):
+            self.asteroids += [Asteroid(create_random_position(
+                self.screen.get_width(), self.screen.get_height(), 0, self.player_ship.position
+            ), self.screen.get_size(), size[i]) for _ in range(count)]
