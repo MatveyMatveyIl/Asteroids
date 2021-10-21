@@ -8,7 +8,3 @@ class Bullet(GameObject):
 
     def move(self):
         self.position += self.velocity
-
-    def delete_bullets_out_of_screen(self, bullets):
-        pass
-

@@ -18,6 +18,7 @@ class Game:
         self.player_ship = PlayerShip(Vector2(600, 400), self.screen_size, self.bullets.append)
         self.levels = load_levels()
         self.asteroids = []
+        self.lives = 3
 
     def game_loop(self):
         self._create_asteroids()
@@ -57,14 +58,9 @@ class Game:
     def _process_game_logic(self):
         for game_obj in self._get_all_moving_obg():
             game_obj.move()
-
-        for bullet in self.bullets:
-            for astr in self.asteroids:
-                if astr.collision(bullet):
-                    self.asteroids.remove(astr)
-                    self.bullets.remove(bullet)
-                    astr.fault_asteroid()
-                    break
+        self._check_bullet_and_asteroid_collisions()
+        self._check_ship_and_asteroid_collisions()
+        self._delete_bullets_out_of_screen()
 
     def _draw_game(self):
         self.screen.blit(self.background, (0, 0))
@@ -81,3 +77,29 @@ class Game:
             self.asteroids += [Asteroid(create_random_position(
                 self.screen.get_width(), self.screen.get_height(), 0, self.player_ship.position
             ), self.screen_size, 3 - i, self.asteroids.append) for _ in range(count)]
+
+    def _delete_bullets_out_of_screen(self):
+        for bullet in self.bullets:
+            if bullet.position.x < 0 or bullet.position.x > self.screen_size[0]:
+                self.bullets.remove(bullet)
+            elif bullet.position.y < 0 or bullet.position.y > self.screen_size[1]:
+                self.bullets.remove(bullet)
+
+    def _check_bullet_and_asteroid_collisions(self):
+        for bullet in self.bullets:
+            for asteroid in self.asteroids:
+                if asteroid.collision(bullet):
+                    self.asteroids.remove(asteroid)
+                    self.bullets.remove(bullet)
+                    asteroid.fault_asteroid()
+                    break
+
+    def _check_ship_and_asteroid_collisions(self):
+        for asteroid in self.asteroids:
+            if self.player_ship.collision(asteroid):
+                self.asteroids.remove(asteroid)
+                self.lives -= 1
+                print(self.lives)
+                break
+            if self.lives <= 0:
+                print('exit')
