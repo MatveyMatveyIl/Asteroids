@@ -42,11 +42,11 @@ class Game:
                 # menu
                 pass
         pressed_key = pygame.key.get_pressed()
-        if pressed_key[pygame.K_RIGHT]:
+        if pressed_key[pygame.K_RIGHT] or pressed_key[pygame.K_d]:
             self.player_ship.rotate_ship(hourly=True)
-        if pressed_key[pygame.K_LEFT]:
+        if pressed_key[pygame.K_LEFT] or pressed_key[pygame.K_a]:
             self.player_ship.rotate_ship(hourly=False)
-        if pressed_key[pygame.K_UP]:
+        if pressed_key[pygame.K_UP] or pressed_key[pygame.K_w]:
             self.player_ship.accelerate()
         if pressed_key[pygame.K_SPACE]:
             pass
