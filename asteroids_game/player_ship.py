@@ -13,7 +13,7 @@ class PlayerShip(GameObject):
         self.default_direction = Vector2(0, -1)
         self.sign = {True: 1, False: -1}
         self.acceleration = 0.1
-        self.bullet_speed = 5
+        self.bullet_speed = 7
         self.create_bullet = create_bullet
         self.screen_size = screen_size
 
@@ -27,7 +27,7 @@ class PlayerShip(GameObject):
         sprite.blit(rotated_sprite, self.position - Vector2(new_rad) * 0.5)
 
     def accelerate(self):
-        if abs(self.velocity.x) < 5 and abs(self.velocity.y) < 5:
+        if abs(self.velocity.x) < 4 and abs(self.velocity.y) < 4:
             self.velocity += self.direction * self.acceleration
         else:
             self.velocity = Vector2(self.velocity.x / 1.001, self.velocity.y / 1.001)

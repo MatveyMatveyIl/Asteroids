@@ -75,7 +75,7 @@ class Game:
     def _create_asteroids(self):
         for i, count in enumerate(self.levels[self.current_level]):
             self.asteroids += [Asteroid(create_random_position(
-                self.screen.get_width(), self.screen.get_height(), 0, self.player_ship.position
+                self.screen.get_width(), self.screen.get_height(), 350, self.player_ship.position
             ), self.screen_size, 3 - i, self.asteroids.append) for _ in range(count)]
 
     def _delete_bullets_out_of_screen(self):
