@@ -5,6 +5,7 @@ from asteroids_game.src.load_levels import load_levels
 from asteroids_game.src.create_random_way import create_random_position
 from asteroids_game.player_ship import PlayerShip
 from asteroids_game.asteroid import Asteroid
+from asteroids_game.score import Score
 
 
 class Game:
@@ -19,6 +20,7 @@ class Game:
         self.levels = load_levels()
         self.asteroids = []
         self.lives = 3
+        self.score = Score()
 
     def game_loop(self):
         self._create_asteroids()
@@ -91,7 +93,7 @@ class Game:
                 if asteroid.collision(bullet):
                     self.asteroids.remove(asteroid)
                     self.bullets.remove(bullet)
-                    asteroid.fault_asteroid()
+                    asteroid.fault_asteroid(self.score)
                     break
 
     def _check_ship_and_asteroid_collisions(self):
@@ -99,7 +101,6 @@ class Game:
             if self.player_ship.collision(asteroid):
                 self.asteroids.remove(asteroid)
                 self.lives -= 1
-                print(self.lives)
                 break
             if self.lives <= 0:
-                print('exit')
+                pass
