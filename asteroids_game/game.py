@@ -26,9 +26,9 @@ class Game:
         self.score = Score()
         self.win = False
         self.running = True
+        self._create_asteroids()
 
     def game_loop(self):
-        self._create_asteroids()
         while self.running:
             self._process_input()
             self._process_game_logic()
@@ -44,12 +44,8 @@ class Game:
             if event.type == pygame.QUIT or \
                     (event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE):
                 quit()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                game = Game(self.current_level)
-                game.game_loop()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_n:
-                game = Game(self.current_level)
-                game.game_loop()
+            if event.type == pygame.KEYDOWN and (event.key == pygame.K_r or event.key == pygame.K_n):
+                self._create_new_level()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 self.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.player_ship:
@@ -165,3 +161,11 @@ class Game:
                     break
                 if level == self.current_level:
                     next_level = True
+
+    def _create_new_level(self):
+        self.score.reset_score()
+        self.lives = 3
+        self.win = False
+        self.asteroids.clear()
+        self.player_ship = PlayerShip(Vector2(600, 400), self.screen_size, self.bullets.append)
+        self._create_asteroids()
