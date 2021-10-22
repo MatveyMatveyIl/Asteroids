@@ -85,7 +85,7 @@ class Game:
             self.screen.blit(img, img_rect)
 
     def _draw_score(self):
-        font = pygame.font.Font(pygame.font.match_font('arial'), 36)
+        font = pygame.font.Font(f'assets/font/ARCADECLASSIC.TTF', 54)
         text = font.render(str(self.score.current_score), False, (255, 255, 255))
         text_rect = text.get_rect()
         text_rect.x, text_rect.y = 50, 10
