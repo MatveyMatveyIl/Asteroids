@@ -5,6 +5,7 @@ from pygame.transform import rotozoom
 from asteroids_game.src.image_for_sprites_loader import load_sprite
 from asteroids_game.src.load_levels import load_levels
 from asteroids_game.src.create_random_way import create_random_position
+from asteroids_game.src.save_user_game import save_result
 from asteroids_game.player_ship import PlayerShip
 from asteroids_game.asteroid import Asteroid
 from asteroids_game.score import Score
@@ -26,9 +27,9 @@ class Game:
         self.score = Score()
         self.win = False
         self.running = True
+        self._create_asteroids()
 
     def game_loop(self):
-        self._create_asteroids()
         while self.running:
             self._process_input()
             self._process_game_logic()
@@ -43,14 +44,12 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or \
                     (event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE):
+                save_result(self.current_level)
                 quit()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                game = Game(self.current_level)
-                game.game_loop()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_n:
-                game = Game(self.current_level)
-                game.game_loop()
+            if event.type == pygame.KEYDOWN and (event.key == pygame.K_r or event.key == pygame.K_n):
+                self._create_new_level()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                save_result(self.current_level)
                 self.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.player_ship:
                 self.player_ship.shoot()
@@ -165,3 +164,11 @@ class Game:
                     break
                 if level == self.current_level:
                     next_level = True
+
+    def _create_new_level(self):
+        self.score.reset_score()
+        self.lives = 3
+        self.win = False
+        self.asteroids.clear()
+        self.player_ship = PlayerShip(Vector2(600, 400), self.screen_size, self.bullets.append)
+        self._create_asteroids()

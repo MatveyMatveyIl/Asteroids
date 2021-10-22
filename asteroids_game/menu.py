@@ -25,8 +25,10 @@ class Menu:
             pygame.draw.rect(self.screen, (80, 80, 80), (x, y, w, h))
             if click[0] == 1:
                 if text == 'Start':
-                    game = Game('level_1')
-                    game.game_loop()
+                    with open('asteroids_game/user_results.txt', 'r') as f:
+                        level = f.readline()
+                        game = Game(level)
+                        game.game_loop()
                 if text == 'Level':
                     level = Level()
                     level.level_loop()
