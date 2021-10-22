@@ -14,8 +14,7 @@ class Menu:
         self.screen = pygame.display.set_mode((1200, 800))
         self.screen_size = self.screen.get_size()
         self.background = load_sprite('space_bg')
-        self.menu_front = pygame.font.Font('freesansbold.ttf', 39)
-
+        self.menu_front = pygame.font.Font(f'assets/font/ARCADECLASSIC.TTF', 56)
     def button(self, x, y, w, h, text):
         pos = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
