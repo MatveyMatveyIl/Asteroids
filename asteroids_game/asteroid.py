@@ -18,7 +18,7 @@ class Asteroid(GameObject):
         }
         scale = size_to_scale[self.asteroid_size]
         sprite = rotozoom(load_sprite('2'), random.randint(0, 90), scale)
-        super().__init__(sprite, position, create_random_velocity(1, 3), screen_size)
+        super().__init__(sprite, position, create_random_velocity(1, 4), screen_size)
 
     def fault_asteroid(self, score):
         if self.asteroid_size > 1:

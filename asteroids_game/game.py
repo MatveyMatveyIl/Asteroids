@@ -25,6 +25,7 @@ class Game:
         self.asteroids = []
         self.lives = 3
         self.score = Score()
+        self.win = False
 
     def game_loop(self):
         self._create_asteroids()
@@ -46,9 +47,9 @@ class Game:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                 game = Game(self.current_level)
                 game.game_loop()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                # menu
-                pass
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_n:
+                game = Game(self.current_level)
+                game.game_loop()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.player_ship:
                 self.player_ship.shoot()
 
@@ -67,6 +68,7 @@ class Game:
         self._check_bullet_and_asteroid_collisions()
         self._check_ship_and_asteroid_collisions()
         self._delete_bullets_out_of_screen()
+        self._decide_win()
 
     def _draw_game(self):
         self.screen.blit(self.background, (0, 0))
@@ -74,6 +76,11 @@ class Game:
             game_obg.draw(self.screen)
         self._draw_lives()
         self._draw_score()
+        self._draw_level_number()
+        if self.player_ship is None:
+            self._draw_restart()
+        if self.win:
+            self._draw_win()
         pygame.display.flip()
         self.fps.tick(60)
 
@@ -85,11 +92,27 @@ class Game:
             self.screen.blit(img, img_rect)
 
     def _draw_score(self):
-        font = pygame.font.Font(f'assets/font/ARCADECLASSIC.TTF', 54)
-        text = font.render(str(self.score.current_score), False, (255, 255, 255))
-        text_rect = text.get_rect()
-        text_rect.x, text_rect.y = 50, 10
-        self.screen.blit(text, text_rect)
+        self._draw_elements(str(self.score.current_score), 54, 50, 10)
+
+    def _draw_restart(self):
+        texts = [('You    Lost!', 128, 300, 300), ('Press   R   to   restart', 32, 400, 500)]
+        for text in texts:
+            self._draw_elements(text[0], text[1], text[2], text[3])
+
+    def _draw_win(self):
+        texts = [('You    Win!', 128, 300, 300), ('Press   N   to   play', 32, 400, 500)]
+        for text in texts:
+            self._draw_elements(text[0], text[1], text[2], text[3])
+
+    def _draw_level_number(self):
+        self._draw_elements(self.current_level.replace('_', ' '), 36, 500, 15)
+
+    def _draw_elements(self, text, size, x, y):
+        font = pygame.font.Font(f'assets/font/ARCADECLASSIC.TTF', size)
+        text_render = font.render(text, False, (255, 255, 255))
+        text_rect = text_render.get_rect()
+        text_rect.x, text_rect.y = x, y
+        self.screen.blit(text_render, text_rect)
 
     def _get_all_moving_obg(self):
         moving_obj = [*self.asteroids, *self.bullets]
@@ -100,7 +123,7 @@ class Game:
     def _create_asteroids(self):
         for i, count in enumerate(self.levels[self.current_level]):
             self.asteroids += [Asteroid(create_random_position(
-                self.screen.get_width(), self.screen.get_height(), random.randint(250, 350), self.player_ship.position
+                self.screen.get_width(), self.screen.get_height(), random.randint(150, 350), self.player_ship.position
             ), self.screen_size, 3 - i, self.asteroids.append) for _ in range(count)]
 
     def _delete_bullets_out_of_screen(self):
@@ -129,3 +152,14 @@ class Game:
                 if self.lives <= 0:
                     self.player_ship = None
                     break
+
+    def _decide_win(self):
+        if len(self.asteroids) == 0 and self.player_ship and not self.win:
+            self.win = True
+            next_level = False
+            for level in self.levels.keys():
+                if next_level:
+                    self.current_level = level
+                    break
+                if level == self.current_level:
+                    next_level = True
