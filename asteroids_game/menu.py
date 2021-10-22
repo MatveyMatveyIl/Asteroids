@@ -57,27 +57,28 @@ class Level:
         self.screen = pygame.display.set_mode((1200, 800))
         self.screen_size = self.screen.get_size()
         self.background = load_sprite('space_bg')
-        self.menu_front = pygame.font.Font('freesansbold.ttf', 39)
+        self.menu_front = pygame.font.Font(f'assets/font/ARCADECLASSIC.TTF', 56)
 
     def button(self, x, y, w, h, text):
         pos = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
-        text_obj = self.menu_front.render(text, True, (255, 164, 189))
+        text_obj = self.menu_front.render(text, True, (255, 255, 255))
         if x < pos[0] < x + w and y < pos[1] < y + h:
-
+            pygame.draw.rect(self.screen, (80, 80, 80), (x, y, w, h))
             if click[0] == 1:
                 game = Game(text)
                 game.game_loop()
-        pygame.draw.rect(self.screen, (255, 255, 255), (x, y, w, h))
-        self.screen.blit(text_obj, (x, y))
+        else:
+            pygame.draw.rect(self.screen, False, (x, y, w, h))
+        self.screen.blit(text_obj, (x + w / 2 - len(text) * 15, y))
 
     def level_loop(self):
         while True:
             self.screen.blit(self.background, (0, 0))
-            self.button(200, 200, 400, 50, 'level_1')
-            self.button(200, 300, 400, 50, 'level_2')
-            self.button(200, 400, 400, 50, 'level_3')
-            self.button(200, 500, 400, 50, 'level_4')
+            self.button(50, 200, 400, 50, 'level_1')
+            self.button(50, 300, 400, 50, 'level_2')
+            self.button(50, 400, 400, 50, 'level_3')
+            self.button(50, 500, 400, 50, 'level_4')
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     quit()
