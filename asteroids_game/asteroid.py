@@ -21,7 +21,13 @@ class Asteroid(GameObject):
             1: 0.5
         }
         scale = size_to_scale[self.asteroid_size]
-        sprite = rotozoom(load_sprite('2'), random.randint(0, 90), scale)
+        random_img = random.randint(1, 3)
+        all_img = {
+            1: 'asteroid1',
+            2: 'asteroid2',
+            3: 'asteroid3',
+        }
+        sprite = rotozoom(load_sprite(all_img[random_img]), random.randint(0, 90), scale)
         super().__init__(sprite, position, create_random_velocity(1, 4), screen_size)
 
     def fault_asteroid(self, score):
