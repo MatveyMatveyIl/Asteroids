@@ -9,6 +9,9 @@ from asteroids_game.src.create_random_way import create_random_velocity
 
 class Asteroid(GameObject):
     def __init__(self, position, screen_size, asteroid_size, destruction_action):
+        self.destruction_sound_small = load_sound('bangSmall')
+        self.destruction_sound_medium = load_sound('bangMedium')
+        self.destruction_sound_big = load_sound('bangLarge')
         self.asteroid_size = asteroid_size
         self.destruction_action = destruction_action
         self.screen_size = screen_size
@@ -25,11 +28,14 @@ class Asteroid(GameObject):
         if self.asteroid_size > 1:
             if self.asteroid_size == 3:
                 score.update_score('big')
+                self.destruction_sound_big.play()
             else:
                 score.update_score('medium')
+                self.destruction_sound_medium.play()
             for _ in range(random.randint(2, 3)):
                 self.destruction_action(
                     Asteroid(self.position + Vector2(0, 0), self.screen_size, self.asteroid_size - 1,
                              self.destruction_action))
         else:
             score.update_score('small')
+            self.destruction_sound_small.play()

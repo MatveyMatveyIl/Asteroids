@@ -10,7 +10,6 @@ class PlayerShip(GameObject):
     def __init__(self, position, screen_size, create_bullet):
         super().__init__(load_sprite('player_ship'), position, Vector2(0, -1), screen_size)
         self.shoot_sound = load_sound('fire')
-        self.move_sound = load_sound('thrust')
         self.rotate_angle = 5
         self.direction = Vector2(0, -1)
         self.default_direction = Vector2(0, -1)
@@ -32,10 +31,8 @@ class PlayerShip(GameObject):
     def accelerate(self):
         if abs(self.velocity.x) < 4 and abs(self.velocity.y) < 4:
             self.velocity += self.direction * self.acceleration
-            self.move_sound.play()
         else:
             self.velocity = Vector2(self.velocity.x / 1.001, self.velocity.y / 1.001)
-            self.move_sound.play()
 
     def shoot(self):
         bullet_velocity = self.direction * self.bullet_speed + self.velocity
