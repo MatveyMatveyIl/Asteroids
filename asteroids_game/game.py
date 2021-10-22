@@ -1,5 +1,4 @@
 import random
-
 import pygame
 from pygame.math import Vector2
 from pygame.transform import rotozoom
@@ -26,10 +25,11 @@ class Game:
         self.lives = 3
         self.score = Score()
         self.win = False
+        self.running = True
 
     def game_loop(self):
         self._create_asteroids()
-        while True:
+        while self.running:
             self._process_input()
             self._process_game_logic()
             self._draw_game()
@@ -50,6 +50,8 @@ class Game:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_n:
                 game = Game(self.current_level)
                 game.game_loop()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.player_ship:
                 self.player_ship.shoot()
 
