@@ -5,6 +5,7 @@ from pygame.transform import rotozoom
 from asteroids_game.src.image_for_sprites_loader import load_sprite
 from asteroids_game.src.load_levels import load_levels
 from asteroids_game.src.create_random_way import create_random_position
+from asteroids_game.src.save_user_game import save_result
 from asteroids_game.player_ship import PlayerShip
 from asteroids_game.asteroid import Asteroid
 from asteroids_game.score import Score
@@ -43,10 +44,12 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or \
                     (event.type == pygame.KEYDOWN and event.key == pygame.K_BACKSPACE):
+                save_result(self.current_level)
                 quit()
             if event.type == pygame.KEYDOWN and (event.key == pygame.K_r or event.key == pygame.K_n):
                 self._create_new_level()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                save_result(self.current_level)
                 self.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.player_ship:
                 self.player_ship.shoot()
