@@ -2,6 +2,7 @@ import random
 
 import pygame
 from pygame.math import Vector2
+from pygame.transform import rotozoom
 from asteroids_game.src.image_for_sprites_loader import load_sprite
 from asteroids_game.src.load_levels import load_levels
 from asteroids_game.src.create_random_way import create_random_position
@@ -71,8 +72,24 @@ class Game:
         self.screen.blit(self.background, (0, 0))
         for game_obg in self._get_all_moving_obg():
             game_obg.draw(self.screen)
+        self._draw_lives()
+        self._draw_score()
         pygame.display.flip()
         self.fps.tick(60)
+
+    def _draw_lives(self):
+        for i in range(self.lives):
+            img = rotozoom(load_sprite('player_ship'), 0, 0.75)
+            img_rect = img.get_rect()
+            img_rect.x, img_rect.y = self.screen_size[0] - 30 * i - 50, 10
+            self.screen.blit(img, img_rect)
+
+    def _draw_score(self):
+        font = pygame.font.Font(pygame.font.match_font('arial'), 36)
+        text = font.render(str(self.score.current_score), False, (255, 255, 255))
+        text_rect = text.get_rect()
+        text_rect.x, text_rect.y = 50, 10
+        self.screen.blit(text, text_rect)
 
     def _get_all_moving_obg(self):
         moving_obj = [*self.asteroids, *self.bullets]

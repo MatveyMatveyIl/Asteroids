@@ -22,9 +22,13 @@ class Asteroid(GameObject):
 
     def fault_asteroid(self, score):
         if self.asteroid_size > 1:
+            if self.asteroid_size == 3:
+                score.update_score('big')
+            else:
+                score.update_score('medium')
             for _ in range(random.randint(2, 3)):
                 self.destruction_action(
                     Asteroid(self.position + Vector2(0, 0), self.screen_size, self.asteroid_size - 1,
                              self.destruction_action))
         else:
-            score.update_score()
+            score.update_score('small')
