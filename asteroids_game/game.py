@@ -19,6 +19,7 @@ class Game:
         self.screen_size = self.screen.get_size()
         self.background = load_sprite('space_bg')
         self.fps = pygame.time.Clock()
+        self.tick = pygame.time.get_ticks()
         self.bullets = []
         self.player_ship = PlayerShip(Vector2(600, 400), self.screen_size, self.bullets.append)
         self.levels = load_levels()
@@ -57,10 +58,12 @@ class Game:
         pressed_key = pygame.key.get_pressed()
 
         if self.player_ship:
-            if pressed_key[pygame.K_RIGHT] or pressed_key[pygame.K_d]:
-                self.player_ship.rotate_ship(hourly=True)
-            if pressed_key[pygame.K_LEFT] or pressed_key[pygame.K_a]:
-                self.player_ship.rotate_ship(hourly=False)
+            if pygame.time.get_ticks() >= self.tick:
+                self.tick = pygame.time.get_ticks() + 50
+                if pressed_key[pygame.K_RIGHT] or pressed_key[pygame.K_d]:
+                    self.player_ship.rotate_ship(hourly=True)
+                if pressed_key[pygame.K_LEFT] or pressed_key[pygame.K_a]:
+                    self.player_ship.rotate_ship(hourly=False)
             if pressed_key[pygame.K_UP] or pressed_key[pygame.K_w]:
                 self.player_ship.accelerate()
 
@@ -75,6 +78,7 @@ class Game:
         self._check_ship_and_asteroid_collisions()
         self._delete_bullets_out_of_screen()
         self._decide_win()
+
 
     def _draw_game(self):
         self.screen.blit(self.background, (0, 0))

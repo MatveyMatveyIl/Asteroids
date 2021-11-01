@@ -8,7 +8,7 @@ from asteroids_game.src.load_sound import load_sound
 
 class PlayerShip(GameObject):
     def __init__(self, position, screen_size, create_bullet):
-        super().__init__(load_sprite('player_ship'), position, Vector2(0, -0.01), screen_size)
+        super().__init__(load_sprite('player_ship'), position, Vector2(0, -0.1), screen_size)
         self.shoot_sound = load_sound('fire')
         self.rotate_angle = 5
         self.direction = Vector2(0, -1)
@@ -18,7 +18,6 @@ class PlayerShip(GameObject):
         self.bullet_speed = 7
         self.create_bullet = create_bullet
         self.screen_size = screen_size
-
 
     def rotate_ship(self, hourly):
         self.direction.rotate_ip(self.rotate_angle * self.sign[hourly])
@@ -34,7 +33,6 @@ class PlayerShip(GameObject):
             self.velocity += self.direction * self.acceleration
         else:
             self.velocity = Vector2(self.velocity.x / 1.001, self.velocity.y / 1.001)
-
 
     def shoot(self):
         bullet_velocity = self.direction * self.bullet_speed + self.velocity
