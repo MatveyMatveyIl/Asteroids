@@ -3,5 +3,7 @@ import os
 
 
 def load_sprite(name):
-    sprite = load(os.path.join('assets/sprites/', f'{name}.png'))
+    path = os.path.abspath(f'assets/sprites/{name}.png')
+    #print(path)
+    sprite = load(path)
     return sprite.convert_alpha()

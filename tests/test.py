@@ -24,12 +24,13 @@ import sys
 #
 
 
+
 class TestGameObject(unittest.TestCase):
 
     def test_move(self):
         pygame.init()
         screen = pygame.display.set_mode((1200, 800))
-        sprite = (pygame.image.load('C:/Users/Администратор/OneDrive/Рабочий стол/Asteroids/assets/sprites/player_ship.png')).convert_alpha()
+        sprite = (pygame.image.load('/assets/sprites/player_ship.png')).convert_alpha()
         game_object = GameObject(sprite, Vector2(1, 1), Vector2(1, 1), screen.get_size())
         game_object.move()
         self.assertEqual((2, 2), game_object.position)
@@ -38,7 +39,7 @@ class TestGameObject(unittest.TestCase):
         pygame.init()
         screen = pygame.display.set_mode((1200, 800))
         sprite = (pygame.image.load(
-            'C:/Users/Администратор/OneDrive/Рабочий стол/Asteroids/assets/sprites/player_ship.png')).convert_alpha()
+            '/assets/sprites/player_ship.png')).convert_alpha()
         game_object = GameObject(sprite, Vector2(1, 1), Vector2(1, 1), screen.get_size())
         game_object.deceleration()
         self.assertEqual((1, 1), game_object.position)
