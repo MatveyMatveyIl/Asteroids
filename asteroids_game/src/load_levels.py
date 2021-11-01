@@ -1,6 +1,9 @@
+import os
+
 def load_levels():
     levels = dict()
-    with open('asteroids_game/levels.txt', 'r') as f:
+    path = os.path.abspath(f'asteroids_game/levels.txt').replace('/tests', '').replace('\\tests', '')
+    with open(path, 'r') as f:
         while True:
             text = f.readline()
             if len(text) == 0:

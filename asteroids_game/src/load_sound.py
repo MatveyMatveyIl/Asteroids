@@ -3,5 +3,5 @@ import os
 
 
 def load_sound(name):
-    path = os.path.abspath(f'assets/sounds/{name}.wav').replace('/tests', '')
+    path = os.path.abspath(f'assets/sounds/{name}.wav').replace('/tests', '').replace('\\tests', '')
     return Sound(path)

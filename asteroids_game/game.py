@@ -79,7 +79,6 @@ class Game:
         self._delete_bullets_out_of_screen()
         self._decide_win()
 
-
     def _draw_game(self):
         self.screen.blit(self.background, (0, 0))
         for game_obg in self._get_all_moving_obg():
