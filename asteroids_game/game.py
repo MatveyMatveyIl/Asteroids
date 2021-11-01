@@ -55,6 +55,7 @@ class Game:
                 self.player_ship.shoot()
 
         pressed_key = pygame.key.get_pressed()
+
         if self.player_ship:
             if pressed_key[pygame.K_RIGHT] or pressed_key[pygame.K_d]:
                 self.player_ship.rotate_ship(hourly=True)
@@ -64,8 +65,12 @@ class Game:
                 self.player_ship.accelerate()
 
     def _process_game_logic(self):
+        pressed_key = pygame.key.get_pressed()
         for game_obj in self._get_all_moving_obg():
-            game_obj.move()
+            if pressed_key[pygame.K_CAPSLOCK]:
+                game_obj.deceleration()
+            else:
+                game_obj.move()
         self._check_bullet_and_asteroid_collisions()
         self._check_ship_and_asteroid_collisions()
         self._delete_bullets_out_of_screen()
