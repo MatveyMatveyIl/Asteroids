@@ -3,6 +3,6 @@ import os
 
 
 def load_sprite(name):
-    path = os.path.abspath(f'assets/sprites/{name}.png').replace('/tests', '').replace('\\tests', '')
+    path = os.path.abspath(f'assets/sprites/{name}.png')
     sprite = load(path)
     return sprite.convert_alpha()

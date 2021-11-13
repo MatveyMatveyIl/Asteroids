@@ -1,4 +1,6 @@
 import random
+import time
+
 import pygame
 from pygame.math import Vector2
 from pygame.transform import rotozoom
@@ -59,7 +61,7 @@ class Game:
 
         if self.player_ship:
             if pygame.time.get_ticks() >= self.tick:
-                self.tick = pygame.time.get_ticks() + 50
+                self.tick = pygame.time.get_ticks() + 20
                 if pressed_key[pygame.K_RIGHT] or pressed_key[pygame.K_d]:
                     self.player_ship.rotate_ship(hourly=True)
                 if pressed_key[pygame.K_LEFT] or pressed_key[pygame.K_a]:
@@ -70,9 +72,13 @@ class Game:
     def _process_game_logic(self):
         pressed_key = pygame.key.get_pressed()
         for game_obj in self._get_all_moving_obg():
-            if pressed_key[pygame.K_CAPSLOCK]:
+            if pressed_key[pygame.K_l]:
+                if game_obj is self.player_ship:
+                    self.player_ship.rotate_angle = 2
                 game_obj.deceleration()
             else:
+                if game_obj is self.player_ship:
+                    self.player_ship.rotate_angle = 5
                 game_obj.move()
         self._check_bullet_and_asteroid_collisions()
         self._check_ship_and_asteroid_collisions()
