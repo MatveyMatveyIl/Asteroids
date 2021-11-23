@@ -73,13 +73,13 @@ class Game:
         for game_obj in self._get_all_moving_obg():
             if pressed_key[pygame.K_l]:
                 if self.dt > 0.2:
-                    self.dt -= 0.005
+                    self.dt -= 0.003
                 if game_obj is self.player_ship:
                     self.player_ship.rotate_angle = 2
                 game_obj.deceleration(dt=self.dt)
             else:
                 if self.dt < 1:
-                    self.dt += 0.005
+                    self.dt += 0.003
                 if game_obj is self.player_ship:
                     self.player_ship.rotate_angle = 5
                 game_obj.move(dt=self.dt)
