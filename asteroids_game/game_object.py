@@ -9,10 +9,10 @@ class GameObject:
         self.velocity = velocity
         self.radius = sprite.get_width() / 2
         self.screen_size = screen_size
-        self.tick = pygame.time.get_ticks() + 70
+        #self.tick = pygame.time.get_ticks() + 70
 
-    def move(self):
-        self.position += self.velocity
+    def move(self, dt=1.0):
+        self.position += self.velocity * dt
         if self.position.x < 0:
             self.position.x = self.screen_size[0]
         elif self.position.x > self.screen_size[0]:
@@ -23,10 +23,11 @@ class GameObject:
             self.position.y = 0
 
     def deceleration(self):
-        for i in range(70, 0, -1):
-            if pygame.time.get_ticks() >= self.tick:
-                self.tick = pygame.time.get_ticks() + i
-                self.move()
+        self.move(dt=0.5)
+        #for i in range(70, 0, -1):
+           # if pygame.time.get_ticks() >= self.tick:
+               # self.tick = pygame.time.get_ticks() + i
+               # self.move()
 
     def collision(self, other_object):
         dist = self.position.distance_to(other_object.position)

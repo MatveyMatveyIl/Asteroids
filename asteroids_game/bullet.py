@@ -6,5 +6,5 @@ class Bullet(GameObject):
     def __init__(self, position, velocity, screen_size):
         super().__init__(load_sprite('bullet'), position, velocity, screen_size)
 
-    def move(self):
-        self.position += self.velocity
+    def move(self, dt=1.0):
+        self.position += self.velocity * dt

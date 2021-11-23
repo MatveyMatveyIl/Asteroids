@@ -28,9 +28,9 @@ class PlayerShip(GameObject):
         new_rad = rotated_sprite.get_size()
         sprite.blit(rotated_sprite, self.position - Vector2(new_rad) * 0.5)
 
-    def accelerate(self):
+    def accelerate(self, dt=1):
         if abs(self.velocity.x) < 4 and abs(self.velocity.y) < 4:
-            self.velocity += self.direction * self.acceleration
+            self.velocity += self.direction * self.acceleration * dt
         else:
             self.velocity = Vector2(self.velocity.x / 1.001, self.velocity.y / 1.001)
 
