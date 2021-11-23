@@ -27,6 +27,7 @@ class Game:
         self.levels = load_levels()
         self.asteroids = []
         self.lives = 3
+        self.dt = 1
         self.score = Score()
         self.win = False
         self.running = True
@@ -60,28 +61,28 @@ class Game:
         pressed_key = pygame.key.get_pressed()
 
         if self.player_ship:
-            # if pygame.time.get_ticks() >= self.tick:
-            # self.tick = pygame.time.get_ticks() + 20
             if pressed_key[pygame.K_RIGHT] or pressed_key[pygame.K_d]:
                 self.player_ship.rotate_ship(hourly=True)
             if pressed_key[pygame.K_LEFT] or pressed_key[pygame.K_a]:
                 self.player_ship.rotate_ship(hourly=False)
             if pressed_key[pygame.K_UP] or pressed_key[pygame.K_w]:
-                self.player_ship.accelerate(dt=0.5 if pressed_key[pygame.K_l] else 1)
+                self.player_ship.accelerate(dt=0.5 if pressed_key[pygame.K_l] else self.dt)
 
     def _process_game_logic(self):
         pressed_key = pygame.key.get_pressed()
         for game_obj in self._get_all_moving_obg():
             if pressed_key[pygame.K_l]:
-                #     #for i in range(400):
-                #         #pygame.draw.rect(self.background, (0, 0, 0), (100, 700, i, 30))
+                if self.dt > 0.2:
+                    self.dt -= 0.005
                 if game_obj is self.player_ship:
                     self.player_ship.rotate_angle = 2
-                game_obj.deceleration()
+                game_obj.deceleration(dt=self.dt)
             else:
+                if self.dt < 1:
+                    self.dt += 0.005
                 if game_obj is self.player_ship:
                     self.player_ship.rotate_angle = 5
-                game_obj.move()
+                game_obj.move(dt=self.dt)
         self._check_bullet_and_asteroid_collisions()
         self._check_ship_and_asteroid_collisions()
         self._delete_bullets_out_of_screen()
@@ -98,7 +99,6 @@ class Game:
             self._draw_restart()
         if self.win:
             self._draw_win()
-        pygame.draw.rect(self.background, (255, 255, 255), (100, 700, 400, 30))
         pygame.display.flip()
         self.fps.tick(60)
 

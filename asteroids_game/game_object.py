@@ -1,5 +1,4 @@
 from pygame.math import Vector2
-import pygame
 
 
 class GameObject:
@@ -9,7 +8,6 @@ class GameObject:
         self.velocity = velocity
         self.radius = sprite.get_width() / 2
         self.screen_size = screen_size
-        #self.tick = pygame.time.get_ticks() + 70
 
     def move(self, dt=1.0):
         self.position += self.velocity * dt
@@ -22,12 +20,8 @@ class GameObject:
         elif self.position.y > self.screen_size[1]:
             self.position.y = 0
 
-    def deceleration(self):
-        self.move(dt=0.5)
-        #for i in range(70, 0, -1):
-           # if pygame.time.get_ticks() >= self.tick:
-               # self.tick = pygame.time.get_ticks() + i
-               # self.move()
+    def deceleration(self, dt=0.5):
+        self.move(dt=dt)
 
     def collision(self, other_object):
         dist = self.position.distance_to(other_object.position)
