@@ -1,9 +1,13 @@
 import pygame
-import pytest
-from asteroids_game.player_ship import PlayerShip
+import os
 from pygame.math import Vector2
 from asteroids_game.game_object import GameObject
 from asteroids_game.src.image_for_sprites_loader import load_sprite
+
+try:
+    os.environ["DISPLAY"]
+except:
+    os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 
 def test_game_object_move():
