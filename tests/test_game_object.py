@@ -8,10 +8,12 @@ try:
     os.environ["DISPLAY"]
 except:
     os.environ["SDL_VIDEODRIVER"] = "dummy"
+    os.environ['SDL_AUDIODRIVER'] = 'dsp'
 
 
 def test_game_object_move():
     pygame.init()
+    pygame.mixer.init()
     pygame.display.list_modes()
     screen = pygame.display.set_mode((1200, 800))
     sprite = load_sprite("player_ship")
