@@ -12,7 +12,7 @@ def test_game_object_move():
     sprite = load_sprite("player_ship")
     game_object = GameObject(sprite, Vector2(1, 1), Vector2(1, 1), screen.get_size())
     game_object.move()
-    assert ((2, 2), game_object.position)
+    assert Vector2(2, 2) == game_object.position
 
 
 def test_game_object_deceleration():
@@ -21,4 +21,4 @@ def test_game_object_deceleration():
     sprite = load_sprite("player_ship")
     game_object = GameObject(sprite, Vector2(1, 1), Vector2(1, 1), screen.get_size())
     game_object.deceleration()
-    assert ((1, 1), game_object.position)
+    assert Vector2(1.5, 1.5) == game_object.position
