@@ -1,5 +1,6 @@
 import os
 
+
 def load_levels():
     levels = dict()
     path = os.path.abspath(f'asteroids_game/levels.txt')

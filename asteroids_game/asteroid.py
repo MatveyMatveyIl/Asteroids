@@ -45,4 +45,3 @@ class Asteroid(GameObject):
         else:
             score.update_score('small')
             self.destruction_sound_small.play()
-

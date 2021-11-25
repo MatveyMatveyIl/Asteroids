@@ -1,8 +1,13 @@
 import pygame
-import pytest
+import os
 from asteroids_game.asteroid import Asteroid
 from asteroids_game.score import Score
 from pygame.math import Vector2
+
+try:
+    os.environ["DISPLAY"]
+except:
+    os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 
 def test_asteroidCreation():

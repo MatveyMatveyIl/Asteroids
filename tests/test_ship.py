@@ -1,7 +1,12 @@
 import pygame
-import pytest
+import os
 from asteroids_game.player_ship import PlayerShip
 from pygame.math import Vector2
+
+try:
+    os.environ["DISPLAY"]
+except:
+    os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 
 def test_shipCreation():
@@ -50,4 +55,3 @@ def test_ShipRotate():
     for i in range(100):
         ship.rotate_ship(True)
     assert ship.direction != ship.default_direction
-

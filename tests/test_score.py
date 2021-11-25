@@ -1,5 +1,10 @@
-import pytest
+import os
 from asteroids_game.score import Score
+
+try:
+    os.environ["DISPLAY"]
+except:
+    os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 
 def test_IncreaseScore():
@@ -11,6 +16,7 @@ def test_IncreaseScore():
     score.update_score('big')
     assert score.current_score == 170
 
+
 def test_ResetScore():
     score = Score()
     score.update_score('small')
@@ -19,4 +25,3 @@ def test_ResetScore():
     assert score.current_score == 300
     score.reset_score()
     assert score.current_score == 0
-    
