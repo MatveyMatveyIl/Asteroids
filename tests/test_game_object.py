@@ -8,7 +8,7 @@ try:
     os.environ["DISPLAY"]
 except:
     os.environ["SDL_VIDEODRIVER"] = "dummy"
-    os.environ['SDL_AUDIODRIVER'] = 'dsp'
+    os.environ['SDL_AUDIODRIVER'] = 'dummy'
 
 
 def test_game_object_move():
