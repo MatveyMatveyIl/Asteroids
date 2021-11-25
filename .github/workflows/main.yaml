@@ -30,4 +30,4 @@ jobs:
     - name: Test with pytest
       run: |
         ls
-        pythom -m pytest
+        python3 -m pytest
