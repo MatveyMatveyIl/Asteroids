@@ -33,4 +33,4 @@ jobs:
         python3 -m pytest
     - name: Check coverage
       run: |
-        pytest --cov=asteroids_game
+        python3 -m pytest --cov=asteroids_game
