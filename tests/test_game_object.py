@@ -8,6 +8,7 @@ from asteroids_game.src.image_for_sprites_loader import load_sprite
 
 def test_game_object_move():
     pygame.init()
+    pygame.display.list_modes()
     screen = pygame.display.set_mode((1200, 800))
     sprite = load_sprite("player_ship")
     game_object = GameObject(sprite, Vector2(1, 1), Vector2(1, 1), screen.get_size())
@@ -17,6 +18,7 @@ def test_game_object_move():
 
 def test_game_object_deceleration():
     pygame.init()
+    pygame.display.list_modes()
     screen = pygame.display.set_mode((1200, 800))
     sprite = load_sprite("player_ship")
     game_object = GameObject(sprite, Vector2(1, 1), Vector2(1, 1), screen.get_size())
