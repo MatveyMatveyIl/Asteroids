@@ -8,12 +8,10 @@ try:
     os.environ["DISPLAY"]
 except:
     os.environ["SDL_VIDEODRIVER"] = "dummy"
-    os.environ['SDL_AUDIODRIVER'] = 'dsp'
 
 
 def test_asteroidCreation():
     pygame.init()
-    pygame.mixer.init()
     screen = pygame.display.set_mode((1200, 800))
     position = Vector2(500, 500)
     screen_size = screen.get_size()
@@ -25,7 +23,6 @@ def test_asteroidCreation():
 
 def test_asteroidMove():
     pygame.init()
-    pygame.mixer.init()
     screen = pygame.display.set_mode((1200, 800))
     position = Vector2(500, 500)
     screen_size = screen.get_size()
@@ -39,7 +36,6 @@ def test_asteroidMove():
 
 def test_asteroidFault():
     pygame.init()
-    pygame.mixer.init()
     screen = pygame.display.set_mode((1200, 800))
     position = Vector2(500, 500)
     screen_size = screen.get_size()
